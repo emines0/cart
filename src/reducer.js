@@ -54,10 +54,69 @@ const reducer = (state, action) => {
         return cartItem
       })
       .filter((cartItem) => cartItem.amount !== 0)
+    /*
+     * Return the cartItems if the amount is greater than 0 else Remove
+     * cart item
+     */
 
     return { ...state, cart: tempCart }
   }
-  return state
+
+  if (action.type === 'GET_TOTALS') {
+    let tempTotal = 0
+    let tempAmount = 0
+    state.cart.map((item) => {
+      const { price, amount } = item
+      tempTotal += price * amount
+      tempAmount += amount
+    })
+    return {
+      ...state,
+      total: parseFloat(tempTotal.toFixed(2)),
+      /*
+       * limit the number of decimals
+       * it is returning string so it needs to be passed through parseFloat
+       */
+      amount: tempAmount,
+    }
+    /*
+     * returning state and overriding total, amount value
+     */
+    /*
+     * function which returning an object
+     */
+  }
+
+  // if (action.type === 'GET_TOTALS') {
+  //   let { total, amount } = state.cart.reduce(
+  //     (cartTotal, cartItem) => {
+  //       const { price, amount } = cartItem
+  //       const itemTotal = price * amount
+  //       cartTotal.amount += amount
+  //       cartTotal.total += itemTotal
+
+  //       return cartTotal
+  //     },
+  //     {
+  //       total: 0,
+  //       amount: 0,
+  //     }
+  //     /*
+  //      * function which returning an object
+  //      */
+  //   )
+  //   total = parseFloat(total.toFixed(2))
+
+  //   /*
+  //    * limit the number of decimals
+  //    * it is returning string so it needs to be passed through parseFloat
+  //    */
+  //   return { ...state, total, amount }
+  //   /*
+  //    * returning state and overriding total, amount value
+  //    */
+  // }
+  // return state
 }
 
 export default reducer

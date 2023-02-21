@@ -31,6 +31,15 @@ const AppProvider = ({ children }) => {
   const decrease = (id) => {
     dispatch({ type: 'DECREASE', payload: id })
   }
+
+  useEffect(() => {
+    dispatch({ type: 'GET_TOTALS' })
+  }, [state.cart])
+
+  /*
+   * every time if something change in the cart run GET_TOTALS action which is defined in the reducer
+   */
+
   return (
     <AppContext.Provider
       value={{
