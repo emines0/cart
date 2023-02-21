@@ -116,7 +116,18 @@ const reducer = (state, action) => {
   //    * returning state and overriding total, amount value
   //    */
   // }
-  // return state
+
+  if (action.type === 'LOADING') {
+    return { ...state, loading: true }
+    /*
+     * returning all what is in state and overriding loading
+     */
+  }
+  if (action.type === 'DISPLAY_ITEMS') {
+    return { ...state, cart: action.payload, loading: false }
+  }
+
+  return state
 }
 
 export default reducer

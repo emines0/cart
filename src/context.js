@@ -32,6 +32,26 @@ const AppProvider = ({ children }) => {
     dispatch({ type: 'DECREASE', payload: id })
   }
 
+  const fetchData = async () => {
+    dispatch({ type: 'LOADING' })
+    /*
+     * calling loading functionality from reducer
+     */
+    const response = await fetch(url)
+    const cart = await response.json()
+    dispatch({ type: 'DISPLAY_ITEMS', payload: cart })
+    /*
+     * calling display functionality from reducer
+     */
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+  /*
+   * functionality which runs only when app renders
+   */
+
   useEffect(() => {
     dispatch({ type: 'GET_TOTALS' })
   }, [state.cart])
